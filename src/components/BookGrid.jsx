@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { Link } from 'react-router-dom';
 import BookCard from './BookCard';
 
@@ -11,7 +11,7 @@ const BookGrid = ({ search = '', subject = 'All Subjects', user, onToggleWishlis
     const fetchBooks = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5000/api/books?search=${search}&subject=${subject}`);
+        const response = await api.get(`/books?search=${search}&subject=${subject}`);
         setBooks(response.data);
         setLoading(false);
       } catch (error) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import Toast from '../components/Toast';
 
 const BookDetails = ({ user }) => {
@@ -13,7 +13,7 @@ const BookDetails = ({ user }) => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/books/${id}`);
+        const response = await api.get(`/books/${id}`);
         setBook(response.data);
         setLoading(false);
       } catch (error) {

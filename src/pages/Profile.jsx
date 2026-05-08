@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import Toast from '../components/Toast';
 import BookCard from '../components/BookCard';
 
@@ -20,7 +20,7 @@ const Profile = ({ user, onToggleWishlist }) => {
 
   const fetchMyBooks = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/books?email=${user.email}`);
+      const response = await api.get(`/books?email=${user.email}`);
       setMyBooks(response.data);
     } catch (error) {
       console.error('Error fetching my books:', error);
@@ -34,7 +34,7 @@ const Profile = ({ user, onToggleWishlist }) => {
       return;
     }
     try {
-      const allBooksRes = await axios.get('http://localhost:5000/api/books');
+      const allBooksRes = await api.get('/books');
       const saved = allBooksRes.data.filter(b => user.wishlist.includes(b.id));
       setSavedBooks(saved);
       setLoading(false);
@@ -47,7 +47,7 @@ const Profile = ({ user, onToggleWishlist }) => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to remove this listing?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/books/${id}`);
+        await api.delete(`/books/${id}`);
         setToast({ show: true, message: 'Listing removed successfully!', type: 'success' });
         fetchMyBooks();
       } catch (error) {

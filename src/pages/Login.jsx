@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import api from '../services/api';
 import Toast from '../components/Toast';
 import physicsImg from '../assets/physics.png';
 import calculusImg from '../assets/calculus.png';
@@ -15,7 +15,7 @@ const Login = ({ onLoginSuccess }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/login', { email, password });
+      const response = await api.post('/login', { email, password });
       if (response.data.success) {
         setToast({ show: true, message: 'Logged in successfully! Redirecting...', type: 'success' });
         onLoginSuccess({ email });

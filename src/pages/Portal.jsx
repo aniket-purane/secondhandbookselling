@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import Toast from '../components/Toast';
 import { Navigate, useNavigate } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ const Portal = ({ user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/books', {
+      await api.post('/books', {
         ...formData,
         seller: 'Student Seller',
         sellerEmail: user.email
